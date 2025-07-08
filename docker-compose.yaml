@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+
+  nominatim:
+    container_name: nominatim
+    image: mediagis/nominatim:4.5
+    ports:
+      - "8080:8080"
+      - "5432:5432"
+    environment:
+      PBF_URL: "https://download.geofabrik.de/south-america/brazil-latest.osm.pbf" #BR Total
+      REPLICATION_URL: "https://download.geofabrik.de/south-america/brazil-updates/"
+      NOMINATIM_PASSWORD: "nominatim"
+      IMPORT_STYLE: "extratags"
+    volumes:
+      - nominatim-data:/var/lib/postgresql/16/main
+      - nominatim-flatnode:/nominatim/flatnode
+    shm_size: 4gb
+
+volumes:
+  nominatim-data:
+  nominatim-flatnode:
+  
+# docker run -it \
+# -e PBF_URL=https://download.geofabrik.de/south-america/brazil/sul-latest.osm.pbf \
+# -e REPLICATION_URL=https://download.geofabrik.de/south-america/brazil/sul-updates/ \
+# -e NOMINATIM_PASSWORD:nominatim \
+# -p 8080:8080 \
+# -p 5432:5432 \
+# -v nominatim-data:/var/lib/postgresql/16/main \
+# -v nominatim-flatnode:/nominatim/flatnode \
+# --name nominatim \
+# mediagis/nominatim:4.5
+
+#SUL-BR
+#REPLICATION_URL: "https://download.geofabrik.de/south-america/brazil/sul-updates/"
+#PBF_URL: "https://download.geofabrik.de/south-america/brazil/sul-latest.osm.pbf"
+#shm_size: 2gb
